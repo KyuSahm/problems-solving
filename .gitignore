@@ -6,11 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# vim temporary files
-*.swp
-*.un~
-*~
-
 # Distribution / packaging
 .Python
 build/
