@@ -84,6 +84,35 @@ tail = [d, b, c]
 permute_set = set()
 permute_set.add(tuple(head + tail)) // SET은 변경가능한 type인 list에서는 불가능.
 
+9. 문자열 조작
+a = 'Hello'
+b = 'World'
+c = a + ' ' + b # 'Hello World'
+
+a = 'String'
+print(a * 3) # 'StringStringString'
+print(len(a*3)) # 8
+
+a = 'ABCDEF'
+print(a[2:4]) # CD
+
+# 빈문자열 초기화
+u = ''
+v = ''
+
+# for loop with string
+u = '()))))((()'
+for k in u[1:len(u)-1]:
+  if k == '(':
+    a += ')'
+  else:
+    a += '('
+
+# count
+a = 'Hello'
+print(a.count('l')) # 2
+
+
 8. 순열
 from itertools import permutations
 a = [1,2,3]
