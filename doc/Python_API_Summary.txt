@@ -44,119 +44,224 @@ while q: # heapq가 비어있지 않다면
 
 4. 객체 Deep Copy  방법
 import copy
-
 tmp_key = copy.deepcopy(key)
 
-5. map을 list로 만들기
-food_storage = list(map(int, input().split()))
+5. list
+1) 두개의 리스트 합치기
+ a = [1, 2, 3, 4]
+ b = [5, 6, 7]
+ c = 5
+ d = a + b + [c]
 
-6. Dictionary
-dic = {}
-dic['파이썬'] = 'www.python.org'
-dic['마이크로소프트'] = 'www.microsoft.com'
+2) 리스트 컴프리헨션
+- 2차원 배열 생성
+ graph = [[] for i in range(n + 1)] # [[], [], [], ... []] 최단거리 그래프 알고리즘에서 사용
+ visitied = [False] * (n + 1) # [False, False, False....]
+ a = [[0] *  3 for _ in range(10)] # 10 * 3 배열 생성. [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], ....]
 
-print(dic)
-결과:  {'파이썬': 'www.python.org', '마이크로소프트': 'www.microsoft.com'}
+- 조건을 포함
+ array = [i for i in range(20) if i % 2 == 1] # 홀수만 포함한 리스트. 1, 3, 5, ...., 19
 
-print(list(dic.keys()))
-결과: ['파이썬', '마이크로소프트']
+- 연산을 포함
+ array = [ i * i for i in range(10)] # 1, 4, 9, ..., 81
 
-print(list(dic.values()))
-결과: ['www.python.org', 'www.microsoft.com']
+3) 메소드
+- a.append(n)  # 리스트를 끝에 붙임
+- a.pop() # 제일 마지막 원소가 pop
+- a.pop(0) # 제일 첫번째 원소가 pop
+- a.sort() # 오름차순 정렬
+- a.sort(reverse=True) # 내림차순 정렬
+ a = [1, 2, 3, 4, 5]
+ a.sort(reverse=True)  // 역순으로 정렬. a의 내용이 바뀜.
+- a.insert(idx, n) # idx위치에 n 삽입
+- a.count(n) # 값이 n인 원소의 개수
+- a.remove(n) # 값이 n인 원소 한개 제거. 중복된 값이 존재할 경우, 여러번 제거해야 함.
 
-print('파이썬' in dic.keys())
-결과: True
+4) 2차원 Sort
+import operator
 
-print('www.python.org' in dic.values())
-결과: True
+a = [[0, 3], [1, 9], [2, 6]]
+a.sort(key=operator.itemgetter(0, 1)) # 0번째 element에 의해 먼저 sort후, 1번째 element에 의해 sort
+a.sort(key=operator.itemgetter(0, 1), reverse=True) # 0번째 element에 의해 먼저 desc sort후, 1번째 element에 의해 desc sort
+a.sort(reverse=True) # 내림차순
 
-dic.clear()
-print(dic) 
-결과: {}
+result = sorted([9, 1, 8, 5, 4]) # [1, 4, 5, 8, 9]
+result = sorted([9, 1, 8, 5, 4], reverse=True) # [9, 8, 5, 4, 1]
+ 
+# sorted() with key
+array = [('홍길동', 35), ('이순신', 75), ('아무개', 50)]
+result = sorted(array, key=lambda x: x[1], reverse=True)
+print(result)
 
-7. list 관련 API
-a = [1, 2, 3, 4, 5]
-a.sort(reverse=True)  // 역순으로 정렬. a의 내용이 바뀜.
+5) 특정값을 가지는 원소를 모두 제거하기
+ a = [1, 2, 3, 4, 5, 5, 5]
+ remove_set = {3, 5}
+ result = [i for i in a if i not in remove_set]
+ print(result) 
 
-8. set 관련 API
-head = [a, b, c]
-tail = [d, b, c]
-permute_set = set()
-permute_set.add(tuple(head + tail)) // SET은 변경가능한 type인 list에서는 불가능.
+6) map 객체를 list로 만들기
+ food_storage = list(map(int, input().split()))
 
-9. 문자열 조작
-a = 'Hello'
-b = 'World'
-c = a + ' ' + b # 'Hello World'
+6. Tuple
+1) 리스트와 비슷하지만, 한번 선언된 값은 변경이 불가능
+2) 소괄호 "()"를 사용하여 표현
+- 1차원은 아래와 같이 표현
+ (1, ), (2, )
+3) 사용예
+ a = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+ print(a[3]) # 4
+ print(a[3:7]) # 4 5 6 7
+ a.append(10) # 에러 발생. 존재하지 않는 API
+4) 리스트에 비해 상대적으로 공간 효율적임(메모리 절약)
+5) 서로 다른 성질의 데이터를 묶어서 관리해야 할 때
+- 최단 경로 알고리즘에서는 (비용, 노드 번호)의 형태로 튜플을 사용하고, heapq에 heappush하면 순위대로 heappop 할 수 있음.
+6) 데이터의 나열을 해싱(Hashing)의 키 값으로 사용해야 할 때
+- 튜플은 변경이 불가능하므로 리스트와 다르게 키 값으로 사용가능
 
-a = 'String'
-print(a * 3) # 'StringStringString'
-print(len(a*3)) # 8
+7. Dictionary
+1) Key와 Value의 쌍을 데이터로 가지는 자료형 
+- 리스트나 튜플은 값을 순차적으로 저장하지만, 딕셔너리는 Hash table에 저장
+2) 변경 불가능한 자료형(문자열, 튜플등)을 키로 사용할 수 있음.
+3) Hash Table에 저장하므로 데이터의 조회 및 수정은 O(1)
+4) 순서가 없기 때문에, 인덱싱으로 값을 얻을 수 없다. for의 in절에서 iterator처럼 사용가능
+5) 사용예
+ dic = {} # 빈 딕셔너리
+ dic = dict() # 빈 딕셔너리
+ dic['파이썬'] = 'www.python.org'
+ dic['마이크로소프트'] = 'www.microsoft.com'
 
-a = 'ABCDEF'
-print(a[2:4]) # CD
+ if '파이썬' in dic: # O(1)
+   print("key 파이썬") # 출력됨
 
-# 빈문자열 초기화
-u = ''
-v = ''
+ print(dic) 
+ 결과:  {'파이썬': 'www.python.org', '마이크로소프트': 'www.microsoft.com'}
 
-# for loop with string
-u = '()))))((()'
-for k in u[1:len(u)-1]:
-  if k == '(':
-    a += ')'
-  else:
-    a += '('
+ print(list(dic.keys())) # Key 값들만 추출해서 list 생성
+ 결과: ['파이썬', '마이크로소프트']
 
-# count
-a = 'Hello'
-print(a.count('l')) # 2
+ print(list(dic.values())) # Value 값들만 추출해서 list 생성
+ 결과: ['www.python.org', 'www.microsoft.com']
 
+ print('파이썬' in dic.keys()) # O(n)
+ 결과: True
 
-8. 순열
+ print('파이썬' in dic) # O(1)
+ 결과: True
+
+ print('www.python.org' in dic.values())
+ 결과: True
+
+ dic.clear()
+ print(dic) 
+ 결과: {}
+
+8. Set (집합 자료형)
+1) 순서가 없기 때문에, 인덱싱으로 값을 얻을 수 없다. for의 in절에서 iterator처럼 사용가능
+2) 집합의 원소를 in 연산자를 이용해서 찾을 때, O(1)
+3) 집합의 연산
+ a = set([1, 2, 3, 4, 5]) # {1, 2, 3, 4, 5}
+ b = set([3, 4, 5, 6, 7]) # {3, 4, 5, 6, 7}
+  
+ print(a | b) # 합집합. {1, 2, 3, 4, 5, 6, 7}
+ print(a & b) # 교집합. {3, 4, 5}
+ print(a - b) # 차집합. {1, 2}
+
+4) Set의 메소드
+ data = set([1, 2, 3])
+ data.add(4) # {1, 2, 3, 4} 
+ data.update([5, 6]) # 여러 개의 원소 추가. {1, 2, 3, 4, 5, 6} 
+ data.remove(3) # 특정 값의 원소 삭제 {1, 2, 4, 5, 6}   
+
+5) Set에 리스트를 추가하고 싶을 때 - Tuple로 변경해서 넣어라
+ head = [a, b, c]
+ tail = [d, b, c]
+ a = set()
+ a.add(tuple(head + tail)) // SET은 변경가능한 type인 list에서는 불가능. 
+
+9. 문자열
+1) 문자열 합치기
+ a = 'Hello'
+ b = 'World'
+ c = a + ' ' + b # 'Hello World'
+
+2) 문자열의 곱셈연산
+ a = 'String'
+ print(a * 3) # 'StringStringString'
+ print(len(a * 3)) # 18
+
+ a = 'ABCDEF'
+ print(a[2:4]) # CD
+
+3) 문자열 초기화
+ # 빈문자열 초기화
+ u = ''
+ v = ''
+
+4) For loop 
+ # for loop with string
+ u = '()))))((()'
+ for k in u[1:len(u)-1]:
+   if k == '(':
+     a += ')'
+   else:
+     a += '('
+
+5) 특정 문자수 세기
+ # count
+ a = 'Hello'
+ print(a.count('l')) # 2
+
+10. 내장 함수
+ result = sum([1, 2, 3, 4, 5]) # 15
+ result = min(1, 2, 3, 4, 5) # 1
+ result = max(1, 2, 3, 4, 5) # 5
+ result = eval("(3+5)*7") # 56
+ result = sorted([9, 1, 8, 5, 4]) # [1, 4, 5, 8, 9]
+ result = sorted([9, 1, 8, 5, 4], reverse=True) # [9, 8, 5, 4, 1]
+ 
+ # sorted() with key
+ array = [('홍길동', 35), ('이순신', 75), ('아무개', 50)]
+ result = sorted(array, key=lambda x: x[1], reverse=True)
+ print(result)
+ 
+11. 배열 Swapping
+ array[j], array[j + 1] = array[j + 1], array[j]
+
+12. 순열
 from itertools import permutations
 a = [1,2,3]
-b = permutations(a,2)
+b = permutations(a, 2) # 3개중 2개를 이용하여 순열을 생성
 print(list(b))
-
 결과: [(1,2),(1,3),(2,1),(2,3),(3,1),(3,2)]
 
-9. 조합
+13. 조합
 from itertools import combinations
 a = [1,2,3]
-b = combinations(a,2)
-    
+b = combinations(a, 2)    
 print(list(b))
+결과: [(1,2), (1,3), (2,3)]
 
-결과: [(1,2),(1,3),(2,3)]
-
-11. 중복순열
+14. 중복순열
 from itertools import product
-
 dataset = ['A', 'B', 'C']
 
 # 2개를 뽑아 일렬로 나열하는 경우의 수(단, 중복 허용)
 res = list(product(dataset, repeat = 2))
-print(f"모든 경우: {res}") # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
-print(f"모든 경우의 수: {len(res)}") # 9
+print(res) # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
+print(len(res)) # 9
 
-12.  중복 조합
+15.  중복 조합
 from itertools import combinations_with_replacement
+
 dataset = ['A', 'B', 'C']
+res = list(combinations_with_replacement(dataset, 2)) # 2개를 뽑아 순서 고려없이 나열하는 경우의 수(단, 중복 허용)
+print(res) # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
+print(len(res)) # 9
 
-# 2개를 뽑아 순서 고려없이 나열하는 경우의 수(단, 중복 허용)
-res = list(combinations_with_replacement(dataset, 2))
-print(f"모든 경우: {res}") # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
-print(f"모든 경우의 수: {len(res)}") # 9
-
-출처: https://heytech.tistory.com/78 [Hey Tech]
-
-10. Binary Search 관련
-1) bisect() : 오름차순으로 정렬된 시퀀스에 x값이 들어갈 위치를 리턴한
+16. Binary Search 관련
+1) bisect() : 오름차순으로 정렬된 시퀀스에 x값이 들어갈 위치를 리턴한다
 import bisect
- 
 sequence = [1, 3, 4, 5]
- 
 print(bisect.bisect(sequence, 2))
 ---------------------------------
 1
@@ -166,7 +271,6 @@ print(bisect.bisect(sequence, 2))
  bisect_left()는 x와 동일한 값 위치를 리턴한다.
 
 import bisect
- 
 sequence = [1, 3, 4, 5]
  
 print(bisect.bisect_right(sequence, 3))
@@ -175,29 +279,26 @@ print(bisect.bisect_left(sequence, 3))
 2
 1
 
-11. 2차원 Sort
-import operator
+17. Counter 
+- 등장횟수를 세는 기능을 제공
+ from collections import Counter
+ counter = Counter(['red', 'blue', 'red', 'green', 'blue', 'blue'])
+ print(counter['blue']) # 3
+ print(counter['green']) # 1
+ print(dict(counter)) # 사전 자료형 형태로 출력. {'red': 2, 'blue': 3, 'green': 1}
 
-a = [[0, 3], [1, 9], [2, 6]]
-a.sort(key=operator.itemgetter(0, 1)) # 0번째 element에 의해 먼저 sort후, 1번째 element에 의해 sort
-a.sort(key=operator.itemgetter(0, 1), reverse=True) # 0번째 element에 의해 먼저 desc sort후, 1번째 element에 의해 desc sort
-a.sort(reverse=True) # 내림차순
+18. 최대 공약수와 최소 공배수
+ import math
 
-12. 이차원 리스트 생성하기
-graph = [[] for i in range(n + 1)] # [[], [], [], ... []] 최단거리 그래프 알고리즘에서 사용
-visitied = [False] * (n + 1) # [False, False, False....]
-a = [[0] *  3 for _ in range(10)] #[[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], ....]
+ a = 21
+ b = 14
+ print(math.gcd(a, b))
+ print(math.lcm(a, b)) # gcd는 에러가 발생 안하고, lcm만 발생
 
-13. 두개의 리스트 합치기
-a = [1, 2, 3, 4]
-b = [5, 6, 7]
-c = 5
-d = a + b + [c]
-
-14. print함수에서 라인 종료자가 아닌 다른 것을 사용하고 싶을 때
+19. print함수에서 라인 종료자가 아닌 다른 것을 사용하고 싶을 때
 print("{}".format(from_node), end=' ') # 끝이 new line이 아니라, 공백 ' '사용
 
-15. Global Variable (일반적으로 list는 자동으로 연결됨)
+20. Global Variable (일반적으로 list는 자동으로 연결됨)
 globvar = 0
 
 def set_globvar_to_one():
@@ -210,11 +311,37 @@ def print_globvar():
 set_globvar_to_one()
 print_globvar()       # Prints 
 
-16. 빠른 입력 받기
+21. 빠른 입력 받기
 import sys
 
 input = sys.stdin.readline
 n, m = map(int, input().split())
 
+22. 들여쓰기
+- 4개의 공백문자를 쓰는 것을 파이썬 스타일 가이드라인에서 추천
 
+23. 논리 연산자
+ X and Y
+ X or Y
+ not X
+ X
+
+24. 비교 연산자
+ X == Y
+ X != Y
+ X > Y
+ X < Y
+ X >= Y
+ X <= Y
+
+25. 다수의 데이터를 담는 자료형에 가능한 연산자(리스트, 튜플, 문자열, 딕셔너리 etc)
+ x in 리스트
+ x not in 리스트 
+
+26. pass 키워드
+- 아무것도 처리하고 싶지 않을 때 사용
+ if score >= 80:
+   pass
+ else:
+   print("성적이 80점 미만입니다")
 
