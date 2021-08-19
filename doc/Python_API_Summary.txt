@@ -390,3 +390,16 @@ class MyBFS(BFS):
   def bfs(self, index):
     self.visited[index] = True    
     self.queue.append(index)
+
+27. Python Multiline 합치기
+- 괄호 사용하기
+if (a == True and
+    b == False):
+
+a = ('1' + '2' + '3' +
+    '4' + '5')
+- '\' 사용하기 
+if a == True and \
+   b == False:
+a = '1' + '2' + '3' + \
+    '4' + '5'
