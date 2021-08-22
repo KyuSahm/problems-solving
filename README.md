@@ -8,7 +8,9 @@
   * DFS and BFS
   * Dynamic Programming
   * Greedy Algorithms
+  * Graph Theory
+  * Implementations
+  * Search Algorithms
   * Short Path(Graph)
   * Sorting
-  * Search Algorithms
-  * Implementations
+  * String
