@@ -170,6 +170,16 @@ if __name__ == '__main__':
  print(dic) 
  결과: {}
 
+6) Dict Sorting
+num_cnt = dict()
+        
+for c in barcodes:
+    if c not in num_cnt:
+        num_cnt[c] = 1
+    else:
+       num_cnt[c] += 1
+num_cnt = dict(sorted(num_cnt.items(), key=operator.itemgetter(1), reverse=True)) # 딕셔너리의 값을 기존으로 내림차순 정렬
+
 8. Set (집합 자료형)
 1) 순서가 없기 때문에, 인덱싱으로 값을 얻을 수 없다. for의 in절에서 iterator처럼 사용가능
 2) 집합의 원소를 in 연산자를 이용해서 찾을 때, O(1)
@@ -368,7 +378,20 @@ n, m = map(int, input().split())
  else:
    print("성적이 80점 미만입니다")
 
-26. 추상클래스 만들기
+27. Python Multiline 합치기
+- 괄호 사용하기
+if (a == True and
+    b == False):
+
+a = ('1' + '2' + '3' +
+    '4' + '5')
+- '\' 사용하기 
+if a == True and \
+   b == False:
+a = '1' + '2' + '3' + \
+    '4' + '5'
+
+28. 추상클래스 만들기
 from abc import ABCMeta
 from abc import abstractmethod
 
@@ -391,15 +414,23 @@ class MyBFS(BFS):
     self.visited[index] = True    
     self.queue.append(index)
 
-27. Python Multiline 합치기
-- 괄호 사용하기
-if (a == True and
-    b == False):
+29. 클래스 속성관련 => "self.XXX"로 접근
+class ClassVar:
+    text_list = [] # 클래스 속성 변수, 클래스 ClassVar의 정의 시점에 메모리에 할당
+    
+    def add(self, text):
+        self.text_list.append(text)
+    
+    def print_list(self):
+        print(self.text_list)
 
-a = ('1' + '2' + '3' +
-    '4' + '5')
-- '\' 사용하기 
-if a == True and \
-   b == False:
-a = '1' + '2' + '3' + \
-    '4' + '5'
+if __name__ == '__main__':
+    a = ClassVar()
+    a.add('a')
+    a.print_list() # printed ['a']
+
+    b = ClassVar()
+    b.add('b')
+    b.print_list() # printed ['a', 'b']
+
+    
