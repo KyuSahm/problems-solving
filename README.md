@@ -12,5 +12,5 @@
   * Implementations
   * Search Algorithms
   * Short Path(Graph)
-  * Sorting
+  * Sort
   * String

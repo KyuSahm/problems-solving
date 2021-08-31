@@ -433,4 +433,9 @@ if __name__ == '__main__':
     b.add('b')
     b.print_list() # printed ['a', 'b']
 
+30. 숫자 문자의 숫자값 구하기
+# '12984'
+for c in s:
+    print(ord(c) - ord('0')) # print 1, 2, 9, 8, 4
+
     
