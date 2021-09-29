@@ -1,6 +1,6 @@
 '''
-Ư�� �Ÿ��� ���� ã��
-"�̰��� �ڵ� �׽�Ʈ��"�� page 339
+특정 거리의 도시 찾기
+"이것이 코딩 테스트다"의 page 339
 '''
 from collections import deque
 
