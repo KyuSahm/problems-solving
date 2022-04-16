@@ -4,37 +4,40 @@
 '''
 from collections import deque
 
+from collections import deque
+
+def bfs(graph, visited, start, target):
+  answer = []
+  queue = deque()
+  queue.append((start, 0))
+
+  while queue:
+    node, distance = queue.popleft()
+    if not visited[node]:
+      visited[node] = True
+      if distance == target:
+        answer.append(node)
+        continue
+      for child_node in graph[node]:
+        if not visited[child_node]:
+          queue.append((child_node, distance + 1))
+  return answer
+  
 if __name__ == '__main__':
   # n => number of city, m => number of path
   # k => distance between cities
   # x => start city number
   n, m, k, x = map(int, input().split())
-  
-  INF = 1e9
   graph = [[] for _ in range(n + 1)]
-  distance = [INF] * (n + 1)
+  visited = [False] * (n + 1)
+  
+  for _ in range(m):
+    f, t = map(int, input().split())
+    graph[f].append(t)
+  #print (graph)
+  answer = bfs(graph, visited, x, k)
 
-  for i in range(m):
-    from_city, to_city = map(int, input().split())
-    graph[from_city].append(to_city)
-
-  #print("n: {}, m: {}, k: {}, x: {}".format(n, m, k, x))  
-  #print("graph: ", graph)
-  queue = deque()
-  queue.append((0, x))
-
-  while queue:
-    dist, city = queue.popleft()
-    if distance[city] > dist:
-      distance[city] = dist
-      for to_city in graph[city]:
-        queue.append((dist + 1, to_city))
-
-  found = False
-  for i in range(1, n + 1):
-    if distance[i] == k:
-      print(i)
-      found = True      
-      #print(i, end=' ')
-  if not found:
+  if len(answer) == 0:
     print(-1)
+  else:
+    print(answer)
